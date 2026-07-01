@@ -1,0 +1,123 @@
+# ==============================================================================
+# ETECHS MIDDLEWARE PLATFORM - GLOBAL GITIGNORE
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. Security & Secrets
+# ------------------------------------------------------------------------------
+
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.pub
+*.cert
+*.crt
+*.pfx
+secrets/
+credentials/
+*credentials*.json
+*token*.json
+jwt/
+configs/*private*
+configs/*secret*
+
+# ------------------------------------------------------------------------------
+# 2. Môi trường Python & Django (Backend - middleware-be)
+# ------------------------------------------------------------------------------
+# Thư mục môi trường ảo
+venv/
+.venv/
+env/
+.env/
+ENV/
+bin/
+lib/
+include/
+
+# Thư mục cache và compiled code
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+
+# Database SQLite cục bộ dùng test nhanh
+*.sqlite3
+db.sqlite3
+
+# ------------------------------------------------------------------------------
+# 3. Node.js & Vite (Frontend - middleware-fe)
+# ------------------------------------------------------------------------------
+node_modules/
+/middleware-fe/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build outputs
+dist/
+dist-ssr/
+build/
+/middleware-fe/dist/
+
+# ------------------------------------------------------------------------------
+# 4. Terraform & DevOps (devops)
+# ------------------------------------------------------------------------------
+# Thư mục cache của Terraform
+.terraform/
+**/.terraform/
+
+# File trạng thái cục bộ của Terraform 
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Cấu hình Kubernetes & Helm
+kubeconfig
+*.kubeconfig
+.kube/
+.helm/
+
+# ------------------------------------------------------------------------------
+# 5. Hệ thống & IDE (System & Editors)
+# ------------------------------------------------------------------------------
+# Editor directories
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.project
+.classpath
+.settings/
+
+# OS metadata
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ------------------------------------------------------------------------------
+# 6. Nhật ký hệ thống & Tệp tạm (Logs & Temp Files)
+# ------------------------------------------------------------------------------
+*.log
+logs/
+temp/
+tmp/
+/middleware-be/logs/
+/middleware-fe/logs/

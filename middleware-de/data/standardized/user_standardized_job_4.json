@@ -1,0 +1,56 @@
+[
+  {
+    "source_system": "EOS",
+    "source_object": "user",
+    "source_record_id": "USR_1001",
+    "datahub_id": "4c1dcfc3-ca5d-492e-a40b-e32969cefdc7",
+    "master_record_id": "4c1dcfc3-ca5d-492e-a40b-e32969cefdc7",
+    "payload": {
+      "employee_id": "USR_1001",
+      "full_name": "Phan Trọng Nguyên",
+      "email": "trongnguyen.phan@etechs.com.vn",
+      "phone": "84901234567",
+      "created_at": "2026-07-01T10:30:00+00:00"
+    },
+    "metadata": {
+      "job_id": 4,
+      "ingested_at": "2026-07-04T12:43:26.852882"
+    }
+  },
+  {
+    "source_system": "EOS",
+    "source_object": "user",
+    "source_record_id": "USR_1002",
+    "datahub_id": "47f04d0f-82b4-4883-90c0-a63fd982a4e0",
+    "master_record_id": "47f04d0f-82b4-4883-90c0-a63fd982a4e0",
+    "payload": {
+      "employee_id": "USR_1002",
+      "full_name": "Lê Tuấn Đạt",
+      "email": "dat.lt@etechs.vn",
+      "phone": "0987654321",
+      "created_at": "2026/06/15 08:12:34"
+    },
+    "metadata": {
+      "job_id": 4,
+      "ingested_at": "2026-07-04T12:43:26.860848"
+    }
+  },
+  {
+    "source_system": "EOS",
+    "source_object": "user",
+    "source_record_id": "USR_1003",
+    "datahub_id": "8108b6b3-23be-4a3e-a01a-8c67eaf21a03",
+    "master_record_id": "8108b6b3-23be-4a3e-a01a-8c67eaf21a03",
+    "payload": {
+      "employee_id": "USR_1003",
+      "full_name": "Dương Ngọc Hân",
+      "email": "han.duong@etechs.vn",
+      "phone": "0912345678",
+      "created_at": "2026-05-20T00:00:00"
+    },
+    "metadata": {
+      "job_id": 4,
+      "ingested_at": "2026-07-04T12:43:26.869349"
+    }
+  }
+]

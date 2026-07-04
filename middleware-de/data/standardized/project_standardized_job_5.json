@@ -1,0 +1,36 @@
+[
+  {
+    "source_system": "EOS",
+    "source_object": "project",
+    "source_record_id": "PRJ_5001",
+    "datahub_id": "35e2cfd5-d46e-409c-8b44-454fc61721c8",
+    "master_record_id": "35e2cfd5-d46e-409c-8b44-454fc61721c8",
+    "payload": {
+      "id": "PRJ_5001",
+      "name": "Hệ thống Tích hợp ETECHS Middleware",
+      "status": "active",
+      "created_date": "2026-01-10T00:00:00+00:00"
+    },
+    "metadata": {
+      "job_id": 5,
+      "ingested_at": "2026-07-04T12:43:27.029563"
+    }
+  },
+  {
+    "source_system": "EOS",
+    "source_object": "project",
+    "source_record_id": "PRJ_5002",
+    "datahub_id": "2693dfe3-7971-4a1d-b896-1cdaa4a5077d",
+    "master_record_id": "2693dfe3-7971-4a1d-b896-1cdaa4a5077d",
+    "payload": {
+      "id": "PRJ_5002",
+      "name": "Nâng cấp Cổng dịch vụ EOS",
+      "status": "planning",
+      "created_date": "2026-03-15T09:00:00+00:00"
+    },
+    "metadata": {
+      "job_id": 5,
+      "ingested_at": "2026-07-04T12:43:27.037861"
+    }
+  }
+]

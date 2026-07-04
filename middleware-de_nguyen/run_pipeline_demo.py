@@ -1,6 +1,7 @@
 import os
 import sys
 import json
+import shutil
 import pandas as pd
 import sqlite3
 
@@ -10,6 +11,23 @@ if sys.platform.startswith("win"):
     import io
     sys.stdout.reconfigure(encoding='utf-8')
 
+
+# 0. Clean up old data for a fresh run
+base_dir = os.path.dirname(os.path.abspath(__file__))
+
+raw_dir = os.path.join(base_dir, "data", "raw")
+if os.path.exists(raw_dir):
+    shutil.rmtree(raw_dir)
+os.makedirs(raw_dir, exist_ok=True)
+
+standardized_dir = os.path.join(base_dir, "data", "standardized")
+if os.path.exists(standardized_dir):
+    shutil.rmtree(standardized_dir)
+os.makedirs(standardized_dir, exist_ok=True)
+
+db_path = os.path.join(base_dir, "data", "sync_jobs.db")
+if os.path.exists(db_path):
+    os.remove(db_path)
 
 # 1. Generate Mock Data
 from tests.simulate_data import generate_mock_data
@@ -26,7 +44,6 @@ from src.core.queue.tasks import process_ingestion_task
 from src.core.sync.engine import SyncEngine
 
 def run_demo():
-    base_dir = os.path.dirname(os.path.abspath(__file__))
     raw_dir = os.path.join(base_dir, "data", "raw")
     
     user_file = os.path.join(raw_dir, "users.json")

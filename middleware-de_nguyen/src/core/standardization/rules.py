@@ -16,11 +16,28 @@ def normalize_phone(phone: str) -> str:
     return digits
 
 def normalize_iso_date(date_str: str) -> str:
-    # Normalize date/datetime to ISO format
     if not date_str:
         return ""
+    date_str = date_str.strip()
     try:
         dt = datetime.fromisoformat(date_str.replace('Z', '+00:00'))
         return dt.isoformat()
     except ValueError:
-        return date_str
+        pass
+    formats = [
+        "%Y/%m/%d %H:%M:%S",
+        "%Y/%m/%dT%H:%M:%S",
+        "%Y/%m/%d",
+        "%d/%m/%Y %H:%M:%S",
+        "%d/%m/%Y",
+        "%Y-%m-%d",
+        "%d-%m-%Y %H:%M:%S",
+        "%d-%m-%Y",
+    ]
+    for fmt in formats:
+        try:
+            dt = datetime.strptime(date_str, fmt)
+            return dt.isoformat()
+        except ValueError:
+            continue
+    return date_str

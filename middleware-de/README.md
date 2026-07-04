@@ -116,3 +116,58 @@ middleware-de/
    - Tích hợp chạy thật với API và đẩy lên DataHub.
 4. **Viết Job Đối soát (Reconciliation):** Triển khai đối soát số lượng và tìm bản ghi lệch tại `reconciliation/`.
 5. **Viết Test:** Chạy tích hợp và kiểm thử E2E sử dụng pytest để đảm bảo luồng dữ liệu thông suốt, không bị mất mát hay sai lệch.
+
+---
+
+## 4. Chi tiết từng bước hoạt động của Middleware-DE Ingestion Engine
+
+Hệ thống xử lý dữ liệu (data pipeline) bất đồng bộ thông qua Celery và Pandas tuân thủ quy trình 4 bước chính:
+
+### Bước 1: Khởi tạo và Thiết lập Trạng thái (Job Initialization)
+- Khi nhận yêu cầu đồng bộ, `SyncEngine` sẽ tạo một Sync Job mới với trạng thái ban đầu là `pending` trong SQLite database (`data/sync_jobs.db`).
+- Ghi nhận `source_system` (ví dụ: 'EOS'), `object_type` (ví dụ: 'user', 'project', 'task'), và `start_time` để đo lường hiệu năng.
+
+### Bước 2: Nạp và Chuẩn hóa Dữ liệu (Validation & Standardization)
+- Trạng thái Job chuyển sang `validating`.
+- Sử dụng thư viện **Pandas** để nạp tệp dữ liệu JSON nguồn thành một DataFrame nhằm tối ưu hóa xử lý hàng loạt.
+- Thực hiện chuẩn hóa dữ liệu qua các bộ quy tắc trong `src/core/standardization/rules.py`:
+  - **Email**: Chuyển về chữ thường (lowercase) và loại bỏ khoảng trắng thừa (`normalize_email`).
+  - **Số điện thoại**: Loại bỏ ký tự không phải số (`normalize_phone`).
+  - **Ngày tháng**: Chuẩn hóa về định dạng ISO-8601 UTC (`normalize_iso_date`).
+
+### Bước 3: Ánh xạ chuẩn 5 trường định danh MDM (MDM Identifier Mapping)
+- Trạng thái Job chuyển sang `mapping`.
+- Xác định khóa ID gốc từ hệ thống nguồn (`source_record_id`).
+- Tạo mới khóa định danh `datahub_id` bằng UUIDv4 duy nhất cho từng bản ghi.
+- Thiết lập trường định danh `master_record_id` (Trong Giai đoạn 1, tự động gán bằng chính `datahub_id` của bản ghi đó).
+- DataFrame kết quả sẽ có cấu trúc chuẩn MDM ở lớp gốc:
+  - `source_system`
+  - `source_object`
+  - `source_record_id`
+  - `datahub_id`
+  - `master_record_id`
+  Các trường thông tin nghiệp vụ/dữ liệu gốc còn lại sẽ được lưu trữ bên trong một đối tượng con (`payload`).
+
+### Bước 4: Đẩy dữ liệu và Hoàn tất (Pushing & Completion)
+- Trạng thái Job chuyển sang `pushing_datahub`.
+- Thực hiện đẩy gói dữ liệu đã chuẩn hóa lên DataHub API (Trong môi trường demo, ghi trực tiếp xuống file JSON tại thư mục `data/standardized/`).
+- Ghi nhận thông tin ánh xạ ID của từng bản ghi vào bảng `sync_records` trong SQLite phục vụ audit và đối soát (Reconciliation).
+- Chuyển trạng thái Job sang `completed` (hoặc `failed` kèm chi tiết lỗi `error_detail` nếu phát sinh ngoại lệ), ghi nhận thời gian hoàn tất (`end_time`) và tính toán tổng thời gian xử lý (`duration`).
+
+---
+
+## 5. Hướng dẫn Giả lập & Chạy thử nghiệm độc lập (E2E Demo)
+
+Hệ thống hỗ trợ chạy thử nghiệm nhanh toàn bộ pipeline độc lập không phụ thuộc vào Redis Server hay DB Backend:
+
+1. **Cài đặt thư viện:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+2. **Chạy kịch bản giả lập:**
+   ```bash
+   python run_pipeline_demo.py
+   ```
+   *Kịch bản này sẽ tự động sinh dữ liệu giả lập (users, projects, tasks) tại `data/raw/`, cấu hình Celery chạy ở chế độ eager mode (`task_always_eager=True`), đẩy dữ liệu qua Engine chuẩn hóa MDM và in bảng kết quả truy vấn SQLite trực tiếp ra màn hình.*
+

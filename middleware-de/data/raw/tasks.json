@@ -2,22 +2,15 @@
   {
     "task_id": "TSK_9001",
     "project_id": "PRJ_5001",
-    "title": "Xây dựng Ingestion Engine với Celery & Pandas",
-    "priority": "HIGH",
-    "due_date": "2026-07-10T17:00:00Z"
+    "title": "Khoi tao middleware-de",
+    "status": "Done",
+    "created_date": "2026-07-04T15:00:00Z"
   },
   {
     "task_id": "TSK_9002",
     "project_id": "PRJ_5001",
-    "title": "Thiết kế chuẩn 5 trường định danh MDM",
-    "priority": "CRITICAL",
-    "due_date": "2026-07-05T12:00:00Z"
-  },
-  {
-    "task_id": "TSK_9003",
-    "project_id": "PRJ_5002",
-    "title": "Khảo sát API Endpoint hệ thống EOS",
-    "priority": "MEDIUM",
-    "due_date": "2026-08-01T18:00:00Z"
+    "title": "Thiet ke chuan 5 truong dinh danh MDM",
+    "status": "In Progress",
+    "created_date": "04-07-2026"
   }
 ]

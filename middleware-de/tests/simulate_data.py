@@ -9,41 +9,28 @@ def generate_mock_data():
     # 1. Mock Users
     users = [
         {
-            "employee_id": "USR_1001",
-            "full_name": "Phan Trọng Nguyên",
-            "email": "  TrongNguyen.Phan@Etechs.Com.vn  ",
-            "phone": "+84 901-234-567",
-            "created_at": "2026-07-01T10:30:00Z"
+            "id": "USR_1001",
+            "name": "Nguyen Van A",
+            "email": " NGUYENvANA@Gmail.com ",
+            "phone": "+84 (909) 123-456",
+            "created_at": "2026/07/01 08:30:00"
         },
         {
-            "employee_id": "USR_1002",
-            "full_name": "Lê Tuấn Đạt",
-            "email": "DAT.LT@Etechs.vn",
-            "phone": "0987.654.321",
-            "created_at": "2026/06/15 08:12:34"
-        },
-        {
-            "employee_id": "USR_1003",
-            "full_name": "Dương Ngọc Hân",
-            "email": "  Han.Duong@etechs.vn",
-            "phone": "0912-345-678 ",
-            "created_at": "2026-05-20"
+            "id": "USR_1002",
+            "name": "Tran Thi B",
+            "email": "tranthib@Yahoo.com",
+            "phone": "0987654321",
+            "created_at": "02/07/2026 14:15:30"
         }
     ]
     
     # 2. Mock Projects
     projects = [
         {
-            "id": "PRJ_5001",
-            "name": "Hệ thống Tích hợp ETECHS Middleware",
-            "status": "active",
-            "created_date": "2026-01-10T00:00:00Z"
-        },
-        {
-            "id": "PRJ_5002",
-            "name": "Nâng cấp Cổng dịch vụ EOS",
-            "status": "planning",
-            "created_date": "2026-03-15T09:00:00Z"
+            "project_id": "PRJ_5001",
+            "name": "Xay dung he thong MDM",
+            "owner_email": "owner@company.com",
+            "start_date": "2026-07-04"
         }
     ]
     
@@ -52,42 +39,30 @@ def generate_mock_data():
         {
             "task_id": "TSK_9001",
             "project_id": "PRJ_5001",
-            "title": "Xây dựng Ingestion Engine với Celery & Pandas",
-            "priority": "HIGH",
-            "due_date": "2026-07-10T17:00:00Z"
+            "title": "Khoi tao middleware-de",
+            "status": "Done",
+            "created_date": "2026-07-04T15:00:00Z"
         },
         {
             "task_id": "TSK_9002",
             "project_id": "PRJ_5001",
-            "title": "Thiết kế chuẩn 5 trường định danh MDM",
-            "priority": "CRITICAL",
-            "due_date": "2026-07-05T12:00:00Z"
-        },
-        {
-            "task_id": "TSK_9003",
-            "project_id": "PRJ_5002",
-            "title": "Khảo sát API Endpoint hệ thống EOS",
-            "priority": "MEDIUM",
-            "due_date": "2026-08-01T18:00:00Z"
+            "title": "Thiet ke chuan 5 truong dinh danh MDM",
+            "status": "In Progress",
+            "created_date": "04-07-2026"
         }
     ]
     
     # Write to files
-    user_file = os.path.join(raw_dir, "users.json")
-    project_file = os.path.join(raw_dir, "projects.json")
-    task_file = os.path.join(raw_dir, "tasks.json")
-    
-    with open(user_file, "w", encoding="utf-8") as f:
+    with open(os.path.join(raw_dir, "users.json"), "w", encoding="utf-8") as f:
         json.dump(users, f, indent=2, ensure_ascii=False)
-    with open(project_file, "w", encoding="utf-8") as f:
+        
+    with open(os.path.join(raw_dir, "projects.json"), "w", encoding="utf-8") as f:
         json.dump(projects, f, indent=2, ensure_ascii=False)
-    with open(task_file, "w", encoding="utf-8") as f:
+        
+    with open(os.path.join(raw_dir, "tasks.json"), "w", encoding="utf-8") as f:
         json.dump(tasks, f, indent=2, ensure_ascii=False)
         
-    print(f"Generated mock data at:")
-    print(f" - {user_file}")
-    print(f" - {project_file}")
-    print(f" - {task_file}")
+    print(f"Dữ liệu giả lập đã được tạo thành công tại: {raw_dir}")
 
 if __name__ == "__main__":
     generate_mock_data()

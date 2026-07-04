@@ -3,34 +3,17 @@
     "source_system": "EOS",
     "source_object": "project",
     "source_record_id": "PRJ_5001",
-    "datahub_id": "b46ad2da-4e33-4149-b04b-18030e026ec1",
-    "master_record_id": "b46ad2da-4e33-4149-b04b-18030e026ec1",
+    "datahub_id": "a28c6791-cfbd-4baa-b4f6-57f35bd6beed",
+    "master_record_id": "a28c6791-cfbd-4baa-b4f6-57f35bd6beed",
     "payload": {
-      "id": "PRJ_5001",
-      "name": "Hệ thống Tích hợp ETECHS Middleware",
-      "status": "active",
-      "created_date": "2026-01-10T00:00:00+00:00"
+      "project_id": "PRJ_5001",
+      "name": "Xay dung he thong MDM",
+      "owner_email": "owner@company.com",
+      "start_date": "2026-07-04T00:00:00"
     },
     "metadata": {
       "job_id": 2,
-      "ingested_at": "2026-07-04T12:42:32.333678"
-    }
-  },
-  {
-    "source_system": "EOS",
-    "source_object": "project",
-    "source_record_id": "PRJ_5002",
-    "datahub_id": "38be0dc8-e6bb-4e89-b776-49aec2d93460",
-    "master_record_id": "38be0dc8-e6bb-4e89-b776-49aec2d93460",
-    "payload": {
-      "id": "PRJ_5002",
-      "name": "Nâng cấp Cổng dịch vụ EOS",
-      "status": "planning",
-      "created_date": "2026-03-15T09:00:00+00:00"
-    },
-    "metadata": {
-      "job_id": 2,
-      "ingested_at": "2026-07-04T12:42:32.340681"
+      "processed_at": "2026-07-04T15:18:57.999503"
     }
   }
 ]

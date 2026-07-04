@@ -3,54 +3,36 @@
     "source_system": "EOS",
     "source_object": "user",
     "source_record_id": "USR_1001",
-    "datahub_id": "93731add-777c-428b-9422-3a1320055918",
-    "master_record_id": "93731add-777c-428b-9422-3a1320055918",
+    "datahub_id": "6df623bb-ac0a-48e0-a9b6-a9f13915f968",
+    "master_record_id": "6df623bb-ac0a-48e0-a9b6-a9f13915f968",
     "payload": {
-      "employee_id": "USR_1001",
-      "full_name": "Phan Trọng Nguyên",
-      "email": "trongnguyen.phan@etechs.com.vn",
-      "phone": "84901234567",
-      "created_at": "2026-07-01T10:30:00+00:00"
+      "id": "USR_1001",
+      "name": "Nguyen Van A",
+      "email": "nguyenvana@gmail.com",
+      "phone": "84909123456",
+      "created_at": "2026-07-01T08:30:00"
     },
     "metadata": {
       "job_id": 1,
-      "ingested_at": "2026-07-04T12:42:32.174545"
+      "processed_at": "2026-07-04T15:18:57.858998"
     }
   },
   {
     "source_system": "EOS",
     "source_object": "user",
     "source_record_id": "USR_1002",
-    "datahub_id": "cf8c177b-cc91-4fb4-9820-f36376c8668b",
-    "master_record_id": "cf8c177b-cc91-4fb4-9820-f36376c8668b",
+    "datahub_id": "5bd6a4b0-e0c7-40ef-a988-563df2914127",
+    "master_record_id": "5bd6a4b0-e0c7-40ef-a988-563df2914127",
     "payload": {
-      "employee_id": "USR_1002",
-      "full_name": "Lê Tuấn Đạt",
-      "email": "dat.lt@etechs.vn",
+      "id": "USR_1002",
+      "name": "Tran Thi B",
+      "email": "tranthib@yahoo.com",
       "phone": "0987654321",
-      "created_at": "2026/06/15 08:12:34"
+      "created_at": "2026-07-02T14:15:30"
     },
     "metadata": {
       "job_id": 1,
-      "ingested_at": "2026-07-04T12:42:32.182545"
-    }
-  },
-  {
-    "source_system": "EOS",
-    "source_object": "user",
-    "source_record_id": "USR_1003",
-    "datahub_id": "da011e6c-7579-4fa3-8c7c-e417334e5b48",
-    "master_record_id": "da011e6c-7579-4fa3-8c7c-e417334e5b48",
-    "payload": {
-      "employee_id": "USR_1003",
-      "full_name": "Dương Ngọc Hân",
-      "email": "han.duong@etechs.vn",
-      "phone": "0912345678",
-      "created_at": "2026-05-20T00:00:00"
-    },
-    "metadata": {
-      "job_id": 1,
-      "ingested_at": "2026-07-04T12:42:32.189051"
+      "processed_at": "2026-07-04T15:18:57.867079"
     }
   }
 ]

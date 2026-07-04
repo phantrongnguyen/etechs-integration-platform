@@ -1,23 +1,16 @@
 [
   {
-    "employee_id": "USR_1001",
-    "full_name": "Phan Trọng Nguyên",
-    "email": "  TrongNguyen.Phan@Etechs.Com.vn  ",
-    "phone": "+84 901-234-567",
-    "created_at": "2026-07-01T10:30:00Z"
+    "id": "USR_1001",
+    "name": "Nguyen Van A",
+    "email": " NGUYENvANA@Gmail.com ",
+    "phone": "+84 (909) 123-456",
+    "created_at": "2026/07/01 08:30:00"
   },
   {
-    "employee_id": "USR_1002",
-    "full_name": "Lê Tuấn Đạt",
-    "email": "DAT.LT@Etechs.vn",
-    "phone": "0987.654.321",
-    "created_at": "2026/06/15 08:12:34"
-  },
-  {
-    "employee_id": "USR_1003",
-    "full_name": "Dương Ngọc Hân",
-    "email": "  Han.Duong@etechs.vn",
-    "phone": "0912-345-678 ",
-    "created_at": "2026-05-20"
+    "id": "USR_1002",
+    "name": "Tran Thi B",
+    "email": "tranthib@Yahoo.com",
+    "phone": "0987654321",
+    "created_at": "02/07/2026 14:15:30"
   }
 ]

@@ -1,32 +1,51 @@
 import os
 import sys
 import json
-import pandas as pd
+import shutil
 import sqlite3
+import pandas as pd
 
-# Ensure current directory is in python path
+# Thêm đường dẫn hiện tại vào sys.path để Python giải quyết được các module import
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+# Định dạng utf-8 cho đầu ra trên Windows console
 if sys.platform.startswith("win"):
     import io
     sys.stdout.reconfigure(encoding='utf-8')
 
+base_dir = os.path.dirname(os.path.abspath(__file__))
 
-# 1. Generate Mock Data
+# 0. Dọn dẹp dữ liệu cũ để chạy phiên mới sạch sẽ
+raw_dir = os.path.join(base_dir, "data", "raw")
+if os.path.exists(raw_dir):
+    shutil.rmtree(raw_dir)
+
+standardized_dir = os.path.join(base_dir, "data", "standardized")
+if os.path.exists(standardized_dir):
+    shutil.rmtree(standardized_dir)
+
+db_path = os.path.join(base_dir, "data", "sync_jobs.db")
+if os.path.exists(db_path):
+    try:
+        os.remove(db_path)
+    except PermissionError:
+        print("Cảnh báo: Không thể xóa file DB cũ do đang bị giữ bởi tiến trình khác.")
+
+# 1. Sinh dữ liệu giả lập
 from tests.simulate_data import generate_mock_data
 generate_mock_data()
 
-# 2. Configure Celery for Eager Execution (no Redis needed for the local demo run)
-from src.core.queue.celery_app import app
+# 2. Cấu hình Celery chạy ở chế độ Eager Mode (Không cần chạy Redis cục bộ)
+from src.core.celery_app import app
 app.conf.update(
     task_always_eager=True,
     task_eager_propagates=True
 )
 
-from src.core.queue.tasks import process_ingestion_task
-from src.core.sync.engine import SyncEngine
+from src.application.tasks import process_ingestion_task
+from src.core.sync import SyncEngine
 
 def run_demo():
-    base_dir = os.path.dirname(os.path.abspath(__file__))
     raw_dir = os.path.join(base_dir, "data", "raw")
     
     user_file = os.path.join(raw_dir, "users.json")
@@ -34,56 +53,56 @@ def run_demo():
     task_file = os.path.join(raw_dir, "tasks.json")
     
     print("\n" + "="*80)
-    print("STARTING PIPELINE SIMULATION (CELERY + PANDAS)")
+    print("BẮT ĐẦU CHẠY GIẢ LẬP LUỒNG XỬ LÝ (CELERY + PANDAS)")
     print("="*80)
     
-    # Run user ingestion task
-    print("\n--- Ingesting Users ---")
+    # Chạy tác vụ xử lý Users
+    print("\n--- Tiến trình xử lý Users ---")
     u_res = process_ingestion_task.delay(user_file, "user").get()
-    print(f"Task completed. Result: {u_res}")
+    print(f"Hoàn tất task. Kết quả: {u_res}")
     
-    # Run project ingestion task
-    print("\n--- Ingesting Projects ---")
+    # Chạy tác vụ xử lý Projects
+    print("\n--- Tiến trình xử lý Projects ---")
     p_res = process_ingestion_task.delay(project_file, "project").get()
-    print(f"Task completed. Result: {p_res}")
+    print(f"Hoàn tất task. Kết quả: {p_res}")
     
-    # Run task ingestion task
-    print("\n--- Ingesting Tasks ---")
+    # Chạy tác vụ xử lý Tasks
+    print("\n--- Tiến trình xử lý Tasks ---")
     t_res = process_ingestion_task.delay(task_file, "task").get()
-    print(f"Task completed. Result: {t_res}")
+    print(f"Hoàn tất task. Kết quả: {t_res}")
     
-    # 3. Read SQLite Database to Verify Job Logs
+    # 3. Truy vấn cơ sở dữ liệu SQLite để xác minh logs trạng thái
     print("\n" + "="*80)
-    print("VERIFYING STATE DATABASE (SQLite sync_jobs.db)")
+    print("KIỂM TRA CƠ SỞ DỮ LIỆU ĐỐI SOÁT TRẠNG THÁI (SQLite sync_jobs.db)")
     print("="*80)
     
     engine = SyncEngine()
     with sqlite3.connect(engine.db_path) as conn:
-        conn.row_factory = sqlite3.Row
-        cursor = conn.cursor()
-        
-        print("\n--- Sync Jobs Table ---")
-        jobs_df = pd.read_sql_query("SELECT * FROM sync_jobs", conn)
+        print("\n--- Bảng sync_jobs (Theo dõi Job) ---")
+        jobs_df = pd.read_sql_query("SELECT id, source_system, object_type, status, start_time, duration FROM sync_jobs", conn)
         print(jobs_df.to_string(index=False))
         
-        print("\n--- Sync Records Table (Audit trail - 5 MDM Fields) ---")
-        records_df = pd.read_sql_query("SELECT id, job_id, source_system, source_object, source_record_id, datahub_id, master_record_id FROM sync_records", conn)
+        print("\n--- Bảng sync_records (Lưu vết 5 trường định danh MDM) ---")
+        records_df = pd.read_sql_query(
+            "SELECT id, job_id, source_system, source_object, source_record_id, datahub_id, master_record_id FROM sync_records", 
+            conn
+        )
         print(records_df.to_string(index=False))
 
-    # 4. Display Standardized JSON Payloads
+    # 4. Hiển thị thông điệp đầu ra đã được chuẩn hóa định dạng Canonical Schema
     print("\n" + "="*80)
-    print("VERIFYING STANDARDIZED OUTPUT PAYLOADS WITH 5 MDM FIELDS")
+    print("KIỂM TRA KẾT QUẢ ĐẦU RA JSON CHUẨN HÓA MDM")
     print("="*80)
     
     standardized_dir = os.path.join(base_dir, "data", "standardized")
     for file_name in os.listdir(standardized_dir):
         if file_name.endswith(".json"):
             file_path = os.path.join(standardized_dir, file_name)
-            print(f"\nFile: {file_name}")
+            print(f"\nTệp kết quả: {file_name}")
             with open(file_path, "r", encoding="utf-8") as f:
                 records = json.load(f)
                 
-            # Convert to Pandas DataFrame for a clean tabular view of MDM fields and payloads
+            # Đưa vào DataFrame để hiển thị dạng bảng trực quan
             table_data = []
             for rec in records:
                 table_data.append({

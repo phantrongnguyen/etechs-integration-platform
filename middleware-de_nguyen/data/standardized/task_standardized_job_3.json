@@ -1,0 +1,56 @@
+[
+  {
+    "source_system": "EOS",
+    "source_object": "task",
+    "source_record_id": "TSK_9001",
+    "datahub_id": "172bcb33-f1b9-46f7-adb8-0ee9c8b7f0f3",
+    "master_record_id": "172bcb33-f1b9-46f7-adb8-0ee9c8b7f0f3",
+    "payload": {
+      "task_id": "TSK_9001",
+      "project_id": "PRJ_5001",
+      "title": "Xây dựng Ingestion Engine với Celery & Pandas",
+      "priority": "HIGH",
+      "due_date": "2026-07-10T17:00:00+00:00"
+    },
+    "metadata": {
+      "job_id": 3,
+      "ingested_at": "2026-07-04T12:42:32.394218"
+    }
+  },
+  {
+    "source_system": "EOS",
+    "source_object": "task",
+    "source_record_id": "TSK_9002",
+    "datahub_id": "fa936d13-d20c-4eb7-8e6d-b6fab60a5858",
+    "master_record_id": "fa936d13-d20c-4eb7-8e6d-b6fab60a5858",
+    "payload": {
+      "task_id": "TSK_9002",
+      "project_id": "PRJ_5001",
+      "title": "Thiết kế chuẩn 5 trường định danh MDM",
+      "priority": "CRITICAL",
+      "due_date": "2026-07-05T12:00:00+00:00"
+    },
+    "metadata": {
+      "job_id": 3,
+      "ingested_at": "2026-07-04T12:42:32.409006"
+    }
+  },
+  {
+    "source_system": "EOS",
+    "source_object": "task",
+    "source_record_id": "TSK_9003",
+    "datahub_id": "5ddf926a-0ef4-4845-8d78-fa8f1878cfe1",
+    "master_record_id": "5ddf926a-0ef4-4845-8d78-fa8f1878cfe1",
+    "payload": {
+      "task_id": "TSK_9003",
+      "project_id": "PRJ_5002",
+      "title": "Khảo sát API Endpoint hệ thống EOS",
+      "priority": "MEDIUM",
+      "due_date": "2026-08-01T18:00:00+00:00"
+    },
+    "metadata": {
+      "job_id": 3,
+      "ingested_at": "2026-07-04T12:42:32.429360"
+    }
+  }
+]

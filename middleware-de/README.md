@@ -103,4 +103,52 @@ graph TD
 ```bash
 python run_pipeline_demo.py
 ```
+
+---
+
+## 6. Đặc tả Định dạng Dữ liệu Đầu vào & Đầu ra (Data Schema Contract)
+
+### 6.1. Dữ liệu Đầu vào (Raw JSON Input)
+Dữ liệu thô từ các hệ thống nguồn (ví dụ hệ thống EOS) chưa được chuẩn hóa, chứa các ký tự thừa, chữ hoa/chữ thường lộn xộn hoặc sai định dạng ngày tháng:
+```json
+[
+  {
+    "id": "USR_1001",
+    "name": "Nguyen Van A",
+    "email": " NGUYENvANA@Gmail.com ",
+    "phone": "+84 (909) 123-456",
+    "created_at": "2026/07/01 08:30:00"
+  }
+]
 ```
+
+### 6.2. Dữ liệu Đầu ra Chuẩn hóa (Standardized JSON Output)
+Dữ liệu đầu ra sau khi chạy qua Pandas Engine sẽ được chuẩn hóa các trường thông tin nghiệp vụ và tự động bọc trong cấu trúc **Canonical Data Model (CDM)** tuân thủ **5 trường định danh MDM** ở lớp gốc:
+```json
+[
+  {
+    "source_system": "EOS",
+    "source_object": "user",
+    "source_record_id": "USR_1001",
+    "datahub_id": "bef4410f-b9b6-464f-8a48-5e82fcfe3442",
+    "master_record_id": "bef4410f-b9b6-464f-8a48-5e82fcfe3442",
+    "payload": {
+      "id": "USR_1001",
+      "name": "Nguyen Van A",
+      "email": "nguyenvana@gmail.com",
+      "phone": "84909123456",
+      "created_at": "2026-07-01T08:30:00"
+    },
+    "metadata": {
+      "job_id": 1,
+      "processed_at": "2026-07-04T15:15:43.642938"
+    }
+  }
+]
+```
+> **Ghi chú:** 
+> - Trường `email` đã được chuyển về chữ thường và loại bỏ khoảng trắng.
+> - Trường `phone` đã được lọc bỏ tất cả các ký tự không phải số.
+> - Trường `created_at` đã được chuẩn hóa về định dạng ISO-8601 UTC.
+> - Khóa `datahub_id` dạng UUIDv4 được sinh ngẫu nhiên duy nhất cho mỗi bản ghi để quản lý định danh thực thể.
+
